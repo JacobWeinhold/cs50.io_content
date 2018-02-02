@@ -1,0 +1,57 @@
+1. What’s stdint.h?
+stdint.h is a header file in the C standard library providing a set of typedefs that
+specify exact-width integer types, together with the defined minimum and maximum
+allowable values for each type.
+
+2. What’s the point of using uint8_t, uint32_t, int32_t, and uint16_t in a program?
+
+These types are used to prevent errors by limiting the data the variable can hold.
+In that way the type is preventing the variable from having data it shouldn't have.
+
+Image formats have different "bits per pixel" definitions so we can use the right data type for each one then. 
+
+3. How many bytes is a BYTE, a DWORD, a LONG, and a WORD, respectively?
+
+A BYTE is 1 byte, DWORD and LONG are 4 bytes and WORD is 16 2 byte.
+
+4. What (in ASCII, decimal, or hexadecimal) must the first two bytes of any BMP file be?
+
+ASCII: "BM", Hex: 0x424D, Dezimal: 16973. This value is stored in "bfType" in the BITMAPFILEHEADER struct.
+
+5. What’s the difference between bfSize and biSize?
+
+bfSize is the size of the BITMAP file in total and biSize is the size of the image(pixels) itself, without the headers.
+BITMAPFILEHEADER and BITMAPINFOHEADER together have a size 54 of bytes. So bfSize=biSize + 54 bytes.  
+
+6. What does it mean if biHeight is negative?
+
+If biHeight is negative, the bitmap is stored upside down. 
+
+7. What field in BITMAPINFOHEADER specifies the BMP’s color depth (i.e., bits per pixel)?
+biBitCount
+
+8. Why might fopen return NULL in lines 24 and 32 of copy.c?
+
+As the fopen functions opens a file, it will return NULL if the file is not found or can not be opened for any reason,
+such as restrictions in user rights.
+
+9. Why is the third argument to fread always 1 in our code?
+
+We want to read one element at a time, there we pass 1 as the argument for the parameter telling the number of elements to read at a time.
+
+10. What value does copy.c:65 assign padding if bi.biWidth is 3?
+    
+3 will be assigned to padding. As "(4 - (bi.biWidth * sizeof(RGBTRIPLE)) % 4) % 4;" will be (4-(3*3)%4)%4=3.
+sizeof(RGBTRIPLE) is 3, as the struct holds the size of the type BYTE 3 times. 
+
+
+11. What does fseek do?
+
+The fseek function is used to set the position of the cursor in an openeded file.
+
+12. What is SEEK_CUR?
+
+One of three possible arguments for the whence parameter in fseek.
+SEEK_CUR passed as the whence arguments tells fseek to start at the current cursor 
+position and then add the number of bytes passed as an argument for offset. The sum 
+of that is the new cursor position then.
